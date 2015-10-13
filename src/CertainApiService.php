@@ -66,8 +66,8 @@ class CertainApiService{
     * @param string $contentType
     * @return array
     */
-    public function post($ressourceName, $ressourceId=null, $bodyData = array(),$assoc = false,$contentType='json'){
-        return $this->getCertainClient()->post($ressourceName, $ressourceId, $bodyData, $assoc,$contentType);
+    public function post($ressourceName, $ressourceId=null, $bodyData = array(),$query=array(), $assoc = false,$contentType='json'){
+        return $this->getCertainClient()->post($ressourceName, $ressourceId, $bodyData, $query, $assoc,$contentType);
     }
 
     /**

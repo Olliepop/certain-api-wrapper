@@ -130,7 +130,7 @@ class CertainApiClient
      * @param string $contentType
      * @return array
      */
-    public function post($ressourceName, $ressourceId=null, $bodyData = array(), $assoc = false,$contentType='json'){
+    public function post($ressourceName, $ressourceId=null, $bodyData = array(),$query=array(), $assoc = false,$contentType='json'){
         if($contentType!=='json'){
             throw new \Exception('Use only json to update or create');
         }
@@ -139,6 +139,7 @@ class CertainApiClient
             $response = $this->getClient()->post($urlRessource,array(
                 'headers'=> ['Accept'     => "application/$contentType"],
                 'json' => $bodyData,
+                'query'=> $query
             ));  
         } catch (ClientException $ex) {
              $response = $ex->getResponse();

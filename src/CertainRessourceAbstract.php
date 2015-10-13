@@ -61,7 +61,7 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
      * @throws Exceptions\RessourceException
      * @throws Exceptions\RessourceMandatoryFieldException
      */
-    public function post($bodyData,$ressourceId= null, $assoc = false, $contentType='json'){
+    public function post($bodyData, $query=array(), $ressourceId= null, $assoc = false, $contentType='json'){
         $ressourceName = $this->getRessourceName();;
         if($ressourceName == '' || is_null($ressourceName)){
             throw new Exceptions\RessourceException('No ressource name provided.');
@@ -73,7 +73,7 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
                 }
             }
         }
-        $this->results = $this->certainApiService->post($ressourceName, $ressourceId, $bodyData, $assoc, $contentType);
+        $this->results = $this->certainApiService->post($ressourceName, $ressourceId, $bodyData, $query, $assoc, $contentType);
         return $this;
     }
 
