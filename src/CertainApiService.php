@@ -71,6 +71,19 @@ class CertainApiService{
     }
 
     /**
+    * Send a "PUT" request to put information to certain;
+    * @param string $ressourceName
+    * @param string $ressourceId
+    * @param array $bodyData
+    * @param boolean $assoc
+    * @param string $contentType
+    * @return array
+    */
+    public function put($ressourceName, $ressourceId=null, $bodyData = array(),$query=array(), $assoc = false,$contentType='json'){
+        return $this->getCertainClient()->put($ressourceName, $ressourceId, $bodyData, $query, $assoc,$contentType);
+    }
+
+    /**
     * Send a "DELETE" request to delete information from certain;
     * @param string $ressourceName
     * @param string $ressourceId
