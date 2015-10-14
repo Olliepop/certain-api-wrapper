@@ -16,7 +16,7 @@ class RegistrationCertain extends CertainRessourceAbstract implements CertainRes
     }
     public function getMandatoryFields()
     {
-        return array("profile");
+        return array("");
     }
     
 }
