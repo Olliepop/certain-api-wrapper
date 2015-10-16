@@ -126,6 +126,7 @@ class CertainApiClient
      * @param string $ressourceName
      * @param string $ressourceId
      * @param array $bodyData
+     * @param array $query
      * @param boolean $assoc
      * @param string $contentType
      * @return array
@@ -141,33 +142,6 @@ class CertainApiClient
                 'json' => $bodyData,
                 'query'=> $query
             ));  
-        } catch (ClientException $ex) {
-             $response = $ex->getResponse();
-        }
-        $responseCertainApi = new CertainResponse($response);
-        return $responseCertainApi->getResponse($contentType,$assoc);
-    }
-
-     /**
-     * Make "PUT" request with the client.
-     * @param string $ressourceName
-     * @param string $ressourceId
-     * @param array $bodyData
-     * @param boolean $assoc
-     * @param string $contentType
-     * @return array
-     */
-    public function put($ressourceName, $ressourceId=null, $bodyData = array(),$query=array(), $assoc = false,$contentType='json'){
-        if($contentType!=='json'){
-            throw new \Exception('Use only json to update or create');
-        }
-        try{
-            $urlRessource = $this->builPathToCall($ressourceName, $ressourceId);
-            $response = $this->getClient()->put($urlRessource,array(
-                'headers'=> ['Accept'     => "application/$contentType"],
-                'json' => $bodyData,
-                'query'=> $query
-            ));
         } catch (ClientException $ex) {
              $response = $ex->getResponse();
         }

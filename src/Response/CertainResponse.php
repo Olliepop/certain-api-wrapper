@@ -11,7 +11,7 @@ use GuzzleHttp\Message\ResponseInterface;
  */
 class CertainResponse
 {
-//    private $results;
+    
     private $response;
 
     /**

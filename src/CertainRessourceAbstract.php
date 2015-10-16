@@ -5,7 +5,7 @@ use Wabel\CertainAPI\Interfaces\CertainRessourceInterface;
 use Wabel\CertainAPI\Interfaces\CertainResponseInterface;
 
 /**
- * Description of CertainRessourceAbstracct
+ * CertainRessourceAbstracct for common action about Ressource
  *
  * @author rbergina
  */
@@ -55,6 +55,7 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
     /**
      * Add/Update information to certain
      * @param array $bodyData
+     * @param array $query
      * @param string $ressourceId
      * @param boolean $assoc
      * @param string $contentType
@@ -78,31 +79,6 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
         return $this;
     }
 
-    /**
-     * Add/Update information to certain
-     * @param array $bodyData
-     * @param string $ressourceId
-     * @param boolean $assoc
-     * @param string $contentType
-     * @return \Wabel\CertainAPI\CertainRessourceAbstract
-     * @throws Exceptions\RessourceException
-     * @throws Exceptions\RessourceMandatoryFieldException
-     */
-    public function put($bodyData, $query=array(), $ressourceId= null, $assoc = false, $contentType='json'){
-        $ressourceName = $this->getRessourceName();;
-        if($ressourceName == '' || is_null($ressourceName)){
-            throw new Exceptions\RessourceException('No ressource name provided.');
-        }
-        if(!$ressourceId && count($this->getMandatoryFields())>0){
-            foreach ($this->getMandatoryFields() as $field) {
-                if(!in_array($field,  array_keys($bodyData))){
-                    throw new Exceptions\RessourceMandatoryFieldException(sprintf('The field %s is required',$field));
-                }
-            }
-        }
-        $this->results = $this->certainApiService->put($ressourceName, $ressourceId, $bodyData, $query, $assoc, $contentType);
-        return $this;
-    }
 
     /**
      * Delete information from certain
@@ -139,11 +115,11 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
         return $this->results['results'];
     }
 
-    public function  getReason(){
-        return $this->results['message'];
-    }
-
-    public function getRequestResponse(){
+    /**
+     * Get the succes value, results,  success or fail reason
+     * @return array
+     */
+    public function getCompleteResults(){
         return $this->results;
     }
 
