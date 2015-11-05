@@ -18,7 +18,7 @@ class CertainResponse
      *
      * @param Response $response
      */
-    function __construct(ResponseInterface $response)
+    public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
     }

@@ -5,6 +5,7 @@ namespace Wabel\CertainAPI;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Wabel\CertainAPI\Response\CertainResponse;
+use GuzzleHttp\Message\ResponseInterface;
 
 /**
  * CertainApiClient
@@ -39,18 +40,18 @@ class CertainApiClient
      * @param string $password
      * @param string $accountCode
      */
-    public function __construct($baseUri, $username, $password,
+    public function __construct($baseUri = null, $username, $password,
                                 $accountCode)
     {
-        if ($baseUri) {
+        if ($baseUri !== null) {
             $this->baseUri = $baseUri;
         }
         $this->accountCode = $accountCode;
         $this->setClient(new Client([
-                'base_url' => $this->baseUri,
-                'defaults' => [
-                    'auth' => [$username, $password],
-                ]
+            'base_url' => $this->baseUri,
+            'defaults' => [
+                'auth' => [$username, $password],
+            ]
             ]
         ));
     }
@@ -79,20 +80,21 @@ class CertainApiClient
      * Get Account Code
      * @return string
      */
-    function getAccountCode()
+    public function getAccountCode()
     {
         return $this->accountCode;
     }
 
-        /**
+    /**
      * Build the URI to request
      * @param string $ressourceName
      * @param string $ressourceId
      * @return string
      */
-    private function builPathToCall($ressourceName, $ressourceId=null){
+    private function builPathToCall($ressourceName, $ressourceId = null)
+    {
         $ressourceAdded = '';
-        if($ressourceId){
+        if ($ressourceId !== null) {
             $ressourceAdded = '/'.$ressourceId;
         }
         return $ressourceName.'/'.$this->getAccountCode().$ressourceAdded;
@@ -107,18 +109,20 @@ class CertainApiClient
      * @param string $contentType
      * @return array
      */
-    public function get($ressourceName, $ressourceId=null, $query= array(), $assoc = false,$contentType='json'){
-        try{
+    public function get($ressourceName, $ressourceId = null, $query = array(),
+                        $assoc = false, $contentType = 'json')
+    {
+        try {
             $urlRessource = $this->builPathToCall($ressourceName, $ressourceId);
-            $response = $this->getClient()->get($urlRessource,array(
-                'headers'=> ['Accept'     => "application/$contentType"],
-                'query'=> $query
+            $response     = $this->getClient()->get($urlRessource,
+                array(
+                'headers' => ['Accept' => "application/$contentType"],
+                'query' => $query
             ));
         } catch (ClientException $ex) {
-             $response = $ex->getResponse();
+            $response = $ex->getResponse();
         }
-        $responseCertainApi = new CertainResponse($response);
-        return $responseCertainApi->getResponse($contentType,$assoc);
+        return $this->makeCertainApiResponse($response, $contentType, $assoc);
     }
 
     /**
@@ -131,24 +135,27 @@ class CertainApiClient
      * @param string $contentType
      * @return array
      */
-    public function post($ressourceName, $ressourceId=null, $bodyData = array(),$query=array(), $assoc = false,$contentType='json'){
-        if($contentType!=='json'){
+    public function post($ressourceName, $ressourceId = null,
+                         $bodyData = array(), $query = array(), $assoc = false,
+                         $contentType = 'json')
+    {
+        if ($contentType !== 'json') {
             throw new \Exception('Use only json to update or create');
         }
-        try{
+        try {
             $urlRessource = $this->builPathToCall($ressourceName, $ressourceId);
-            $response = $this->getClient()->post($urlRessource,array(
-                'headers'=> ['Accept'     => "application/$contentType"],
+            $response     = $this->getClient()->post($urlRessource,
+                array(
+                'headers' => ['Accept' => "application/$contentType"],
                 'json' => $bodyData,
-                'query'=> $query
-            ));  
+                'query' => $query
+            ));
         } catch (ClientException $ex) {
-             $response = $ex->getResponse();
+            $response = $ex->getResponse();
         }
-        $responseCertainApi = new CertainResponse($response);
-        return $responseCertainApi->getResponse($contentType,$assoc);
+        return $this->makeCertainApiResponse($response, $contentType, $assoc);
     }
-    
+
     /**
      * Make "DELETE" request with the client.
      * @param string $ressourceName
@@ -157,16 +164,33 @@ class CertainApiClient
      * @param string $contentType
      * @return array
      */
-    public function delete($ressourceName, $ressourceId=null, $assoc = false,$contentType='json'){
-        try{
+    public function delete($ressourceName, $ressourceId = null, $assoc = false,
+                           $contentType = 'json')
+    {
+        try {
             $urlRessource = $this->builPathToCall($ressourceName, $ressourceId);
-            $response = $this->getClient()->delete($urlRessource,array(
-                'headers'=> ['Accept'     => "application/$contentType"],
+            $response     = $this->getClient()->delete($urlRessource,
+                array(
+                'headers' => ['Accept' => "application/$contentType"],
             ));
         } catch (ClientException $ex) {
-             $response = $ex->getResponse();
+            $response = $ex->getResponse();
         }
+        return $this->makeCertainApiResponse($response, $contentType, $assoc);
+    }
+
+    /**
+     * Make the  Certain Api repsonse.
+     * @param ResponseInterface $response
+     * @param string $contentType
+     * @param boolean $assoc
+     * @return array
+     */
+    private function makeCertainApiResponse(ResponseInterface $response,
+                                            $contentType = 'json', $assoc = false)
+    {
+
         $responseCertainApi = new CertainResponse($response);
-        return $responseCertainApi->getResponse($contentType,$assoc);
+        return $responseCertainApi->getResponse($contentType, $assoc);
     }
 }
