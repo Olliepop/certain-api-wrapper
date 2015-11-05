@@ -31,7 +31,7 @@ class CertainApiService{
      * Get Account Code
      * @return string
      */
-    function getAccountCode()
+    public function getAccountCode()
     {
         return $this->getCertainClient()->getAccountCode();
     }
