@@ -1,3 +1,7 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Wabel/certain-api-wrapper/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Wabel/certain-api-wrapper/?branch=1.0)
+[![Build Status](https://travis-ci.org/Wabel/certain-api-wrapper.svg?branch=master)](https://travis-ci.org/Wabel/certain-api-wrapper)
+[![Coverage Status](https://coveralls.io/repos/Wabel/certain-api-wrapper/badge.svg?branch=master&service=github)](https://coveralls.io/github/Wabel/certain-api-wrapper?branch=master)
+
 # Certain Api v2 PHP wrapper 
 
 PHP Wrapper to use certain API v2.0 and integrate Events with Your Other Business Applications.
