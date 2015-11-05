@@ -68,7 +68,7 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
         if($ressourceName == '' || is_null($ressourceName)){
             throw new Exceptions\RessourceException('No ressource name provided.');
         }
-        if(!$ressourceId && count($this->getMandatoryFields())>0){
+        if($ressourceId === null && count($this->getMandatoryFields())>0){
             foreach ($this->getMandatoryFields() as $field) {
                 if(!in_array($field,  array_keys($bodyData))){
                     throw new Exceptions\RessourceMandatoryFieldException(sprintf('The field %s is required',$field));
