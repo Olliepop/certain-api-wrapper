@@ -102,7 +102,7 @@ class CertainApiClient
             $ressourceAdded = '/'.$ressourceId;
         }
         if(!is_null($ressourcePath)){
-            return  '/accounts/'.$this->getAccountCode().$ressourceAdded;
+            return  'accounts/'.$this->getAccountCode().$ressourceAdded;
         }else{
             return $ressourceName.'/'.$this->getAccountCode().$ressourceAdded;
         }

@@ -58,7 +58,7 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
         $this->results = $this->certainApiService->get($ressourceName,$this->ressourceCalled, $ressourceId,$params, $assoc, $contentType);
         return $this;
     }
-    
+
     /**
      * Add/Update information to certain
      * @param array $bodyData
@@ -166,9 +166,13 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
     public function createRessourceCalled($ressourceCalledParameters = null)
     {
         if(is_array($ressourceCalledParameters) && !empty($ressourceCalledParameters)){
-            $this->ressourceCalled = '';
             foreach ($ressourceCalledParameters as $segmentKey => $segmentValue) {
-                $this->ressourceCalled .= '/'.$segmentKey.($segmentValue!='')?'/'.$segmentValue:'';
+                if($segmentValue != ''){
+                    $this->ressourceCalled .= '/'.$segmentKey.'/'.$segmentValue;
+                }else{
+                    $this->ressourceCalled .= '/'.$segmentKey;
+                }
+
             }
         }
 
