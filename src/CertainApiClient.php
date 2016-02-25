@@ -87,33 +87,43 @@ class CertainApiClient
 
     /**
      * Build the URI to request
-     * @param string $ressourceName
+     * @param string|array $ressourceName
      * @param string $ressourceId
      * @return string
      */
-    private function builPathToCall($ressourceName, $ressourceId = null)
+    private function builPathToCall($ressourceName,$ressourcePath =null, $ressourceId = null)
     {
         $ressourceAdded = '';
+        if(!is_null($ressourcePath)){
+            $ressourceAdded = $ressourcePath;
+        }
+        
         if ($ressourceId !== null) {
             $ressourceAdded = '/'.$ressourceId;
         }
-        return $ressourceName.'/'.$this->getAccountCode().$ressourceAdded;
+        if(!is_null($ressourcePath)){
+            return  '/accounts/'.$this->getAccountCode().$ressourceAdded;
+        }else{
+            return $ressourceName.'/'.$this->getAccountCode().$ressourceAdded;
+        }
+        
     }
 
     /**
      * Make "GET" request with the client.
      * @param string $ressourceName
+     * @param string $ressourcePath
      * @param string $ressourceId
      * @param array $query
      * @param boolean $assoc
      * @param string $contentType
      * @return array
      */
-    public function get($ressourceName, $ressourceId = null, $query = array(),
+    public function get($ressourceName, $ressourcePath =null, $ressourceId = null, $query = array(),
                         $assoc = false, $contentType = 'json')
     {
         try {
-            $urlRessource = $this->builPathToCall($ressourceName, $ressourceId);
+            $urlRessource = $this->builPathToCall($ressourceName, $ressourcePath, $ressourceId);
             $response     = $this->getClient()->get($urlRessource,
                 array(
                 'headers' => ['Accept' => "application/$contentType"],
@@ -128,6 +138,7 @@ class CertainApiClient
     /**
      * Make "POST" request with the client.
      * @param string $ressourceName
+     * @param string $ressourcePath
      * @param string $ressourceId
      * @param array $bodyData
      * @param array $query
@@ -135,7 +146,7 @@ class CertainApiClient
      * @param string $contentType
      * @return array
      */
-    public function post($ressourceName, $ressourceId = null,
+    public function post($ressourceName, $ressourcePath =null, $ressourceId = null,
                          $bodyData = array(), $query = array(), $assoc = false,
                          $contentType = 'json')
     {
@@ -143,7 +154,7 @@ class CertainApiClient
             throw new \Exception('Use only json to update or create');
         }
         try {
-            $urlRessource = $this->builPathToCall($ressourceName, $ressourceId);
+            $urlRessource = $this->builPathToCall($ressourceName, $ressourcePath, $ressourceId);
             $response     = $this->getClient()->post($urlRessource,
                 array(
                 'headers' => ['Accept' => "application/$contentType"],
@@ -157,18 +168,51 @@ class CertainApiClient
     }
 
     /**
+     * Make "PUT" request with the client.
+     * @param string $ressourceName
+     * @param string $ressourcePath
+     * @param string $ressourceId
+     * @param array $bodyData
+     * @param array $query
+     * @param boolean $assoc
+     * @param string $contentType
+     * @return array
+     */
+    public function put($ressourceName, $ressourcePath =null, $ressourceId = null,
+                         $bodyData = array(), $query = array(), $assoc = false,
+                         $contentType = 'json')
+    {
+        if ($contentType !== 'json') {
+            throw new \Exception('Use only json to update or create');
+        }
+        try {
+            $urlRessource = $this->builPathToCall($ressourceName, $ressourcePath, $ressourceId);
+            $response     = $this->getClient()->put($urlRessource,
+                array(
+                'headers' => ['Accept' => "application/$contentType"],
+                'json' => $bodyData,
+                'query' => $query
+            ));
+        } catch (ClientException $ex) {
+            $response = $ex->getResponse();
+        }
+        return $this->makeCertainApiResponse($response, $contentType, $assoc);
+    }
+    
+    /**
      * Make "DELETE" request with the client.
      * @param string $ressourceName
+     * @param string $ressourcePath
      * @param string $ressourceId
      * @param boolean $assoc
      * @param string $contentType
      * @return array
      */
-    public function delete($ressourceName, $ressourceId = null, $assoc = false,
+    public function delete($ressourceName, $ressourcePath =null, $ressourceId = null, $assoc = false,
                            $contentType = 'json')
     {
         try {
-            $urlRessource = $this->builPathToCall($ressourceName, $ressourceId);
+            $urlRessource = $this->builPathToCall($ressourceName, $ressourcePath, $ressourceId);
             $response     = $this->getClient()->delete($urlRessource,
                 array(
                 'headers' => ['Accept' => "application/$contentType"],

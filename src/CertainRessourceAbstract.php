@@ -24,7 +24,14 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
      * @var array
      */
     protected $results;
-    
+
+    /**
+     *
+     * @var string
+     */
+    protected $ressourceCalled;
+
+
     /**
      * @param CertainApiService $certainApiService
      */
@@ -79,6 +86,34 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
         return $this;
     }
 
+   /**
+     * Update information to certain
+     * @param array $bodyData
+     * @param array $query
+     * @param string $ressourceId
+     * @param boolean $assoc
+     * @param string $contentType
+     * @return \Wabel\CertainAPI\CertainRessourceAbstract
+     * @throws Exceptions\RessourceException
+     * @throws Exceptions\RessourceMandatoryFieldException
+     */
+    public function put($bodyData, $query=array(), $ressourceId= null, $assoc = false, $contentType='json'){
+        $ressourceName = $this->getRessourceName();;
+        if($ressourceName == '' || is_null($ressourceName)){
+            throw new Exceptions\RessourceException('No ressource name provided.');
+        }
+        if(!is_null($ressourceId) && count($this->getMandatoryFields())>0){
+            foreach ($this->getMandatoryFields() as $field) {
+                if(!in_array($field,  array_keys($bodyData))){
+                    throw new Exceptions\RessourceMandatoryFieldException(sprintf('The field %s is required',$field));
+                }
+            }
+        }else{
+            throw new Exceptions\RessourceMandatoryFieldException(sprintf('The id field is required'));
+        }
+        $this->results = $this->certainApiService->put($ressourceName, $ressourceId, $bodyData, $query, $assoc, $contentType);
+        return $this;
+    }
 
     /**
      * Delete information from certain
@@ -122,5 +157,24 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
     public function getCompleteResults(){
         return $this->results;
     }
+
+    public function getRessourceCalled()
+    {
+        return $this->ressourceCalled;
+    }
+
+    public function createRessourceCalled($ressourceCalledParameters = null)
+    {
+        if(is_array($ressourceCalledParameters) && !empty($ressourceCalledParameters)){
+            $this->ressourceCalled = '';
+            foreach ($ressourceCalledParameters as $segmentKey => $segmentValue) {
+                $this->ressourceCalled .= '/'.$segmentKey.($segmentValue!='')?'/'.$segmentValue:'';
+            }
+        }
+
+        return $this;
+    }
+
+
 
 }
