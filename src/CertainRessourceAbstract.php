@@ -55,7 +55,7 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
         if($ressourceName == '' || is_null($ressourceName)){
             throw new Exceptions\RessourceException('No ressource name provided.');
         }
-        $this->results = $this->certainApiService->get($ressourceName, $ressourceId,$params, $assoc, $contentType);
+        $this->results = $this->certainApiService->get($ressourceName,$this->ressourceCalled, $ressourceId,$params, $assoc, $contentType);
         return $this;
     }
     
@@ -82,7 +82,7 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
                 }
             }
         }
-        $this->results = $this->certainApiService->post($ressourceName, $ressourceId, $bodyData, $query, $assoc, $contentType);
+        $this->results = $this->certainApiService->post($ressourceName, $this->ressourceCalled, $ressourceId, $bodyData, $query, $assoc, $contentType);
         return $this;
     }
 
@@ -111,7 +111,7 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
         }else{
             throw new Exceptions\RessourceMandatoryFieldException(sprintf('The id field is required'));
         }
-        $this->results = $this->certainApiService->put($ressourceName, $ressourceId, $bodyData, $query, $assoc, $contentType);
+        $this->results = $this->certainApiService->put($ressourceName, $this->ressourceCalled, $ressourceId, $bodyData, $query, $assoc, $contentType);
         return $this;
     }
 
@@ -128,7 +128,7 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
         if($ressourceName == '' || is_null($ressourceName)){
             throw new Exceptions\RessourceException('No ressource name provided.');
         }
-        $this->results = $this->certainApiService->delete($ressourceName, $ressourceId, $assoc, $contentType);
+        $this->results = $this->certainApiService->delete($ressourceName, $this->ressourceCalled, $ressourceId, $assoc, $contentType);
         return $this;
     }
 
