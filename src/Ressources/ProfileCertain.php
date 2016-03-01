@@ -27,15 +27,21 @@ class ProfileCertain extends CertainRessourceAbstract implements CertainRessourc
      */
     public function getProfileByEmail($email)
     {
-        $resultCertain =  $this->getProfileCertainReturnByEmail($email)->getResults();
-        if($resultCertain->size == 1){
-            return $resultCertain->profiles[0];
-            
-        } elseif($resultCertain->size > 1){
-            throw new RessourceException('Duplicate entries');
+        $resultCertain =  $this->getProfileCertainReturnByEmail($email);
+        if($resultCertain->isSuccessFul()){
+            $resultCertainProfile = $resultCertain->getResults();
+            if($resultCertainProfile->size == 1){
+                return $resultCertainProfile->profiles[0];
+
+            } elseif($resultCertainProfile->size > 1){
+                throw new RessourceException('Duplicate entries');
+            } else{
+                    return $resultCertain;
+            }
         } else{
-                return $resultCertain;
+            return null;
         }
+
     }
 
     /**
