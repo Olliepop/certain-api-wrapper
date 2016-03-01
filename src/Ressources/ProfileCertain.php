@@ -19,6 +19,12 @@ class ProfileCertain extends CertainRessourceAbstract implements CertainRessourc
         return array();
     }
 
+    /**
+     * Return the Profile object
+     * @param string $email
+     * @return ProfileObj
+     * @throws RessourceException
+     */
     public function getProfileByEmail($email)
     {
         $resultCertain =  $this->getProfileCertainReturnByEmail($email);
