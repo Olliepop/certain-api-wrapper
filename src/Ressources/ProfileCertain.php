@@ -27,7 +27,7 @@ class ProfileCertain extends CertainRessourceAbstract implements CertainRessourc
      */
     public function getProfileByEmail($email)
     {
-        $resultCertain =  $this->getProfileCertainReturnByEmail($email);
+        $resultCertain =  $this->getProfileCertainReturnByEmail($email)->getResults();
         if($resultCertain->size == 1){
             return $resultCertain->profiles[0];
             
