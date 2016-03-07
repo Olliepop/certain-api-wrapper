@@ -52,12 +52,18 @@ class ProfileCertain extends CertainRessourceAbstract implements CertainRessourc
      */
     public function getDuplicateProfileByEmail($profilePin,$email)
     {
-        $resultCertain =  $this->getProfileByEmail($email);
+        $resultCertain =  $this->get(null, [
+            'email'=> $email
+        ]);
+        if($resultCertain->isSuccessFul() && $resultCertain->getResults()->size <= 1){
+            return null;
+        }
+        $profilesCertain = $resultCertain->getResults()->profiles;
         $pofileDuplicates = array_map(function($profile) use ($profilePin){
             if($profile->profilePin != $profilePin){
                 return $profile;
             }   
-        }, $resultCertain);
+        }, $profilesCertain);
         return $pofileDuplicates;
 
     }
