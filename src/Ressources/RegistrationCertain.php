@@ -33,4 +33,19 @@ class RegistrationCertain extends CertainRessourceAbstract implements CertainRes
         return null;
     }
     
+    /**
+     * Return with all the result from certain.
+     * @return RegistrationCertain[]
+     */
+    public function getRegistrationsByEventCode($eventCode)
+    {
+        $request=  $this->get($eventCode);
+        if($request->isSuccessFul()){
+            $registrationCertainResults = $request->getResults();
+            return $registrationCertainResults->registrations;
+        }
+        return null;
+    }
+    
+    
 }
