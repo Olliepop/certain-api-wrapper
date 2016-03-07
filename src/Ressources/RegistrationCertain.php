@@ -28,7 +28,7 @@ class RegistrationCertain extends CertainRessourceAbstract implements CertainRes
         $request=  $this->get();
         if($request->isSuccessFul()){
             $registrationCertainResults = $request->getResults();
-            return $profileCertainResults->registrations;
+            return $registrationCertainResults->registrations;
         }
         return null;
     }
