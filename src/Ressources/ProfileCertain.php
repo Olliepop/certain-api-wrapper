@@ -64,7 +64,7 @@ class ProfileCertain extends CertainRessourceAbstract implements CertainRessourc
         $request=  $this->get();
         if($request->isSuccessFul()){
             $profileCertainResults = $request->getResults();
-            return $profileCertainResults;          
+            return $profileCertainResults->profiles;
         }
         return null;
     }
