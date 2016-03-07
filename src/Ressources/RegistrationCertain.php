@@ -18,5 +18,19 @@ class RegistrationCertain extends CertainRessourceAbstract implements CertainRes
     {
         return array('profile');
     }
+
+    /**
+     * Return with all the result from certain.
+     * @return RegistrationCertain[]
+     */
+    public function getRegistrations()
+    {
+        $request=  $this->get();
+        if($request->isSuccessFul()){
+            $registrationCertainResults = $request->getResults();
+            return $profileCertainResults;
+        }
+        return null;
+    }
     
 }

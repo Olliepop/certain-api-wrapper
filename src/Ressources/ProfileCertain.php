@@ -53,4 +53,20 @@ class ProfileCertain extends CertainRessourceAbstract implements CertainRessourc
     {
         return $this->get(null, ['email'=> $email]);
     }
+
+
+    /**
+     * Return with all the result from certain.
+     * @return ProfileCertain[]
+     */
+    public function getProfiles()
+    {
+        $request=  $this->get();
+        if($request->isSuccessFul()){
+            $profileCertainResults = $request->getResults();
+            return $profileCertainResults;          
+        }
+        return null;
+    }
+
 }
