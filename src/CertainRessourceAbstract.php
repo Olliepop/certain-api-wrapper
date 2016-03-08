@@ -143,6 +143,19 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
     }
 
     /**
+     * Check is not found.
+     * @return boolean
+     */
+    public  function isNotFound(){
+        if(isset($this->results['statusCode']) && $this->results['statusCode'] == self::NOT_FOUND){
+            return true;
+        } elseif (isset($this->results['statusCode']) && $this->results['statusCode'] != self::NOT_FOUND){
+            return false;
+        }
+        return null;
+    }
+
+    /**
      * Get the results
      * @return \stdClass|\stdClass[]|array
      */
