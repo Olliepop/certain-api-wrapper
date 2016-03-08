@@ -14,6 +14,7 @@ use Wabel\CertainAPI\CertainApiService;
 
 abstract class CertainRessourceAbstract implements CertainRessourceInterface, CertainResponseInterface
 {
+    const NOT_FOUND = 404;
     /**
      * CertainApiService
      * @var CertainApiService
