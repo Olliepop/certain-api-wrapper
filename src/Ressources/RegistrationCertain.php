@@ -23,9 +23,9 @@ class RegistrationCertain extends CertainRessourceAbstract implements CertainRes
      * Return with all the result from certain.
      * @return RegistrationCertain[]
      */
-    public function getRegistrations()
+    public function getRegistrations($params = [])
     {
-        $request=  $this->get();
+        $request=  $this->get(null,$params);
         if($request->isSuccessFul()){
             $registrationCertainResults = $request->getResults();
             return $registrationCertainResults->registrations;
@@ -46,6 +46,44 @@ class RegistrationCertain extends CertainRessourceAbstract implements CertainRes
         }
         return null;
     }
-    
-    
+
+    /**
+     * Return with the result from certain.
+     * @param string $eventCode
+     * @param string $regCode
+     * @return RegistrationObj
+     */
+    public function getRegistrationByEventCodeAnRegCode($eventCode,$regCode)
+    {
+        $request=  $this->get($eventCode.'/'.$regCode);
+        if($request->isSuccessFul()){
+            $registrationCertainResult= $request->getResults();
+            return $registrationCertainResult;
+        }
+        return null;
+    }
+
+    /**
+     * Update with the result from certain.
+     * @param string $eventCode
+     * @param string $regCode
+     * @return RegistrationObj
+     */
+    public function updateRegistrationByEventCodeAnRegCode($eventCode,$regCode,$data=[])
+    {
+        $request=  $this->post($data,[],$eventCode.'/'.$regCode);
+        if($request->isSuccessFul()){
+            $registrationCertainResult= $request->getResults();
+            return $registrationCertainResult;
+        }
+        return null;
+    }
+
+//    public function substituateRegistration($eventCode,$regCode,$profilePin){
+//        return $this->updateRegistrationByEventCodeAnRegCode($eventCode, $regCode, [
+//            'profile' => [
+//                'pin'=> $profilePin
+//            ]
+//        ]);
+//    }
 }
