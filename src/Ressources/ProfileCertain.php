@@ -44,29 +44,6 @@ class ProfileCertain extends CertainRessourceAbstract implements CertainRessourc
 
     }
 
-    /**
-     * Get duplciates cases for a profile by e-mail.
-     * @param sting $profilePin
-     * @param string $email
-     * @return ProfileObject
-     */
-    public function getDuplicateProfileByEmail($profilePin,$email)
-    {
-        $resultCertain =  $this->get(null, [
-            'email'=> $email
-        ]);
-        if($resultCertain->isSuccessFul() && $resultCertain->getResults()->size <= 1){
-            return null;
-        }
-        $profilesCertain = $resultCertain->getResults()->profiles;
-        $pofileDuplicates = array_map(function($profile) use ($profilePin){
-            if($profile->profilePin != $profilePin){
-                return $profile;
-            }   
-        }, $profilesCertain);
-        return $pofileDuplicates;
-
-    }
 
     /**
      * Return with all the result from certain.
@@ -83,9 +60,9 @@ class ProfileCertain extends CertainRessourceAbstract implements CertainRessourc
      * Return with all the result from certain.
      * @return ProfileCertain[]
      */
-    public function getProfiles()
+    public function getProfiles($params = [])
     {
-        $request=  $this->get();
+        $request=  $this->get(null,$params);
         if($request->isSuccessFul()){
             $profileCertainResults = $request->getResults();
             return $profileCertainResults->profiles;
