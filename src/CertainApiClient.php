@@ -94,7 +94,7 @@ class CertainApiClient
     private function builPathToCall($ressourceName,$ressourcePath =null, $ressourceId = null)
     {
         $ressourceAdded = '';
-        if(!is_null($ressourcePath)){
+        if(!is_null($ressourcePath) && $ressourcePath != ''){
             $ressourceAdded = $ressourcePath;
         }
         

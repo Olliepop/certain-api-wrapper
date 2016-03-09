@@ -179,6 +179,7 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
 
     public function createRessourceCalled($ressourceCalledParameters = null)
     {
+        $this->ressourceCalled = '';
         if(is_array($ressourceCalledParameters) && !empty($ressourceCalledParameters)){
             foreach ($ressourceCalledParameters as $segmentKey => $segmentValue) {
                 if($segmentValue != ''){
