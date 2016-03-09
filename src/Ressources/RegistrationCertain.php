@@ -67,7 +67,7 @@ class RegistrationCertain extends CertainRessourceAbstract implements CertainRes
             if($registrationCertainResults->size > 0 && $returnRegCode && $withAttenteeType){
                 return [
                         'registrationCode' => $registrationCertainResults->registrations[0]->registrationCode,
-                        'attendeeTypeCode' => ($registrationCertainResults->registrations[0]->attendeeTypeCode)?:'',
+                        'attendeeTypeCode' => (isset($registrationCertainResults->registrations[0]->attendeeTypeCode))?:'',
                     ];
             }
             elseif($registrationCertainResults->size > 0 && $returnRegCode){
