@@ -9,10 +9,10 @@ use Wabel\CertainAPI\CertainRessourceAbstract;
  *
  * @author rbergina
  */
-class AppointementsPreferencesCertain extends CertainRessourceAbstract implements CertainRessourceInterface
+class AppointmentsPreferencesCertain extends CertainRessourceAbstract implements CertainRessourceInterface
 {
     public function getRessourceName(){
-        return 'AppointementsPreferences';
+        return 'AppointmentsPreferences';
     }
 
     public function getMandatoryFields()

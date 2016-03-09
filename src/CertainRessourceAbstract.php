@@ -193,6 +193,66 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
         return $this;
     }
 
+    /**
+     *
+     * @param string $eventCode
+     * @param string $ressourceId
+     * @param array $params
+     * @param boolean $assoc
+     * @param string $contentType
+     * @return \Wabel\CertainAPI\CertainRessourceAbstract
+     */
+    public function getWithEventCode($eventCode,$ressourceId,$params= array(), $assoc = false, $contentType='json')
+    {
+        $ressourceId = $eventCode.'/'.$ressourceId;
+        return $this->get($ressourceId, $params, $assoc, $contentType);
+    }
+
+    /**
+     *
+     * @param string $eventCode
+     * @param string $ressourceId
+     * @param array $bodyData
+     * @param array $query
+     * @param boolean $assoc
+     * @param string $contentType
+     * @return \Wabel\CertainAPI\CertainRessourceAbstract
+     */
+    public function postWithEventCode($eventCode,$ressourceId,$bodyData, $query=array(),$assoc = false, $contentType='json')
+    {
+        $ressourceId = $eventCode.'/'.$ressourceId;
+        return $this->post($bodyData, $query, $ressourceId, $assoc, $contentType);
+    }
+
+    /**
+     *
+     * @param string $eventCode
+     * @param string $ressourceId
+     * @param array $bodyData
+     * @param array $query
+     * @param boolean $assoc
+     * @param string $contentType
+     * @return \Wabel\CertainAPI\CertainRessourceAbstract
+     */
+    public function putWithEventCode($eventCode,$ressourceId,$bodyData, $query=array(), $assoc = false, $contentType='json')
+    {
+        $ressourceId = $eventCode.'/'.$ressourceId;
+        return $this->put($bodyData, $query, $ressourceId, $assoc, $contentType);
+    }
+
+    /**
+     *
+     * @param type $eventCode
+     * @param string $ressourceId
+     * @param boolean $assoc
+     * @param string $contentType
+     * @return \Wabel\CertainAPI\CertainRessourceAbstract
+     */
+    public function deleteWithEventCode($eventCode,$ressourceId, $assoc = false, $contentType='json')
+    {
+        $ressourceId = $eventCode.'/'.$ressourceId;
+        return $this->delete($ressourceId, $assoc, $contentType);
+    }
 
 
 }
