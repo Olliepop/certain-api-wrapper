@@ -65,7 +65,7 @@ class RegistrationCertain extends CertainRessourceAbstract implements CertainRes
         if($request->isSuccessFul()){
             $registrationCertainResults = $request->getResults();
             if($registrationCertainResults->size > 0 && $returnRegCode){
-                    return $registrationCertainResults->registrations[0];
+                    return $registrationCertainResults->registrations[0]->registrationCode;
             } elseif($registrationCertainResults->size > 0  && !$returnRegCode){
                 return true;
             }
