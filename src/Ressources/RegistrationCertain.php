@@ -48,6 +48,34 @@ class RegistrationCertain extends CertainRessourceAbstract implements CertainRes
     }
 
     /**
+     * Return with all the result from certain.
+     * @param string $eventCode eventCode
+     * @param string $email email
+     * @param boolean $returnRegCode To say if we want return a boolean or the regCode
+     * @param string $orderBySecure in order to get the first registration when we have duplciates
+     * @return registrationCode|null|boolean
+     */
+    public function hasRegistrationsByEventCodeAndEmail($eventCode,$email,$returnRegCode= true,$orderBySecure='dateModified_asc')
+    {
+        $request=  $this->get($eventCode,[
+            'email'=> $email,
+            'orderBy'=> $orderBySecure
+
+        ]);
+        if($request->isSuccessFul()){
+            $registrationCertainResults = $request->getResults();
+            if($registrationCertainResults->size > 0 && $returnRegCode){
+                    return $registrationCertainResults->registrations[0];
+            } elseif($registrationCertainResults->size > 0  && !$returnRegCode){
+                return true;
+            }
+        } elseif($request->isNotFound()){
+            return false;
+        }
+        return null;
+    }
+
+    /**
      * Return with the result from certain.
      * @param string $eventCode
      * @param string $regCode
