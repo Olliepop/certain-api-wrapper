@@ -53,9 +53,9 @@ class RegistrationCertain extends CertainRessourceAbstract implements CertainRes
      * @param string $email email
      * @param boolean $returnRegCode To say if we want return a boolean or the regCode
      * @param string $orderBySecure in order to get the first registration when we have duplciates
-     * @return registrationCode|null|boolean
+     * @return registrationCode|null|boolean|[registrationCode=> "",attendeeTypeCode=>""]
      */
-    public function hasRegistrationsByEventCodeAndEmail($eventCode,$email,$returnRegCode= true,$orderBySecure='dateModified_asc')
+    public function hasRegistrationsByEventCodeAndEmail($eventCode,$email,$returnRegCode= true,$withAttenteeType=true,$orderBySecure='dateModified_asc')
     {
         $request=  $this->get($eventCode,[
             'email'=> $email,
@@ -64,7 +64,13 @@ class RegistrationCertain extends CertainRessourceAbstract implements CertainRes
         ]);
         if($request->isSuccessFul()){
             $registrationCertainResults = $request->getResults();
-            if($registrationCertainResults->size > 0 && $returnRegCode){
+            if($registrationCertainResults->size > 0 && $returnRegCode && $withAttenteeType){
+                return [
+                        'registrationCode' => $registrationCertainResults->registrations[0]->registrationCode,
+                        'attendeeTypeCode' => $registrationCertainResults->registrations[0]->attendeeTypeCode,
+                    ];
+            }
+            elseif($registrationCertainResults->size > 0 && $returnRegCode){
                     return $registrationCertainResults->registrations[0]->registrationCode;
             } elseif($registrationCertainResults->size > 0  && !$returnRegCode){
                 return true;
