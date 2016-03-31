@@ -142,7 +142,6 @@ abstract class CertainRessourceAbstract implements CertainRessourceInterface, Ce
     public function delete($ressourceId, $assoc = false, $contentType = 'json')
     {
         $ressourceName = $this->getRessourceName();
-        ;
         if ($ressourceName == '' || is_null($ressourceName)) {
             throw new Exceptions\RessourceException('No ressource name provided.');
         }
