@@ -11,12 +11,15 @@ use GuzzleHttp\Message\ResponseInterface;
  */
 class CertainResponse
 {
-    
+
+    /**
+     * @var ResponseInterface
+     */
     private $response;
 
     /**
      *
-     * @param Response $response
+     * @param ResponseInterface $response
      */
     public function __construct(ResponseInterface $response)
     {
@@ -24,7 +27,7 @@ class CertainResponse
     }
 
     /**
-     * Decode a string to json. If a jsonp we convert ton json string before deconding.
+     * Decode a string to json. If a jsonp we convert ton json string before decoding.
      * @param string $jsonp
      * @param boolean $assoc
      * @return \stdClass|array
@@ -44,24 +47,24 @@ class CertainResponse
      * @param boolean $assoc
      * @return array
      */
-    public function getResponse($contentType='json',$assoc = false)
+    public function getResponse($contentType = 'json', $assoc = false)
     {
-        $response = array(
+        $response = [
             'statusCode' => $this->response->getStatusCode(),
             'success' => false,
             'results' => null,
             'message' => $this->response->getReasonPhrase()
-        );
-        if (in_array($this->response->getStatusCode(), array(200, 201))) {
+        ];
+        if (in_array($this->response->getStatusCode(), [200, 201])) {
             $streamBody = $this->response->getBody();
             $bodyString = $streamBody->getContents();
-            
-            if($contentType === 'json'){
-               $response['results'] = $this->jsonp_decode($bodyString, $assoc); 
-            }else{
-               $response['results']=$bodyString;
+
+            if ($contentType === 'json') {
+                $response['results'] = $this->jsonp_decode($bodyString, $assoc);
+            } else {
+                $response['results'] = $bodyString;
             }
-            
+
             $response['success'] = true;
         }
         return $response;

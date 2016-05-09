@@ -3,13 +3,11 @@
 namespace Wabel\CertainAPI\Exceptions;
 
 /**
- * RessourceException
- *
+ * Class ResourceException
+ * 
  * @author rbergina
  */
-
-
-class RessourceException extends \Exception
+class ResourceException extends \Exception
 {
     
 }

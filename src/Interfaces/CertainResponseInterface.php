@@ -3,13 +3,20 @@
 namespace Wabel\CertainAPI\Interfaces;
 
 /**
- * CertainResponseInterface
- *
+ * Interface CertainResponseInterface
+ * 
  * @author rbergina
  */
 interface CertainResponseInterface
 {
+    /**
+     * @return mixed
+     */
     public function isSuccessFul();
+
+    /**
+     * @return mixed
+     */
     public function getResults();
     
 }

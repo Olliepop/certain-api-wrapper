@@ -3,9 +3,10 @@
 namespace Wabel\CertainAPI;
 
 /**
- * CertainApiService
+ * Class CertainApiService
  */
-class CertainApiService{
+class CertainApiService
+{
     /**
      * An instance of the CertainApiClient
      * @var CertainApiClient
@@ -21,6 +22,10 @@ class CertainApiService{
         $this->setCertainClient($certainClient);
     }
 
+    /**
+     * @param CertainApiClient $certainClient
+     * @return $this
+     */
     public function setCertainClient(CertainApiClient $certainClient)
     {
         $this->certainClient = $certainClient;
@@ -40,66 +45,71 @@ class CertainApiService{
      * Get the certain api client
      * @return CertainApiClient
      */
-    public function getCertainClient(){
+    public function getCertainClient()
+    {
         return $this->certainClient;
     }
 
     /**
-    * Send a "GET" request to get information about ressource;
-    * @param string $ressourceName
-    * @param string $ressourcePath
-    * @param string $ressourceId
-    * @param array $params
-    * @param boolean $assoc
-    * @param string $contentType
-    * @return array
-    */
-    public function get($ressourceName, $ressourcePath =null, $ressourceId=null, $params = array(),$assoc = false,$contentType='json'){
-        return $this->getCertainClient()->get($ressourceName, $ressourcePath, $ressourceId, $params, $assoc,$contentType);
+     * Send a "GET" request to get information about resource;
+     * @param string $resourceName
+     * @param string $resourcePath
+     * @param string $resourceId
+     * @param array $params
+     * @param boolean $assoc
+     * @param string $contentType
+     * @return array
+     */
+    public function get($resourceName, $resourcePath = null, $resourceId = null, $params = [], $assoc = false, $contentType = 'json')
+    {
+        return $this->getCertainClient()->get($resourceName, $resourcePath, $resourceId, $params, $assoc, $contentType);
     }
 
     /**
-    * Send a "POST" request to put information to certain;
-    * @param string $ressourceName
-    * @param string $ressourcePath
-    * @param string $ressourceId
-    * @param array $bodyData
-    * @param array $query
-    * @param boolean $assoc
-    * @param string $contentType
-    * @return array
-    */
-    public function post($ressourceName, $ressourcePath =null, $ressourceId=null, $bodyData = array(),$query=array(), $assoc = false,$contentType='json'){
-        return $this->getCertainClient()->post($ressourceName, $ressourcePath, $ressourceId, $bodyData, $query, $assoc,$contentType);
+     * Send a "POST" request to put information to certain;
+     * @param string $resourceName
+     * @param string $resourcePath
+     * @param string $resourceId
+     * @param array $bodyData
+     * @param array $query
+     * @param boolean $assoc
+     * @param string $contentType
+     * @return array
+     */
+    public function post($resourceName, $resourcePath = null, $resourceId = null, $bodyData = [], $query = [], $assoc = false, $contentType = 'json')
+    {
+        return $this->getCertainClient()->post($resourceName, $resourcePath, $resourceId, $bodyData, $query, $assoc, $contentType);
     }
 
 
     /**
-    * Send a "PUT" request to put information to certain;
-    * @param string $ressourceName
-    * @param string $ressourcePath
-    * @param string $ressourceId
-    * @param array $bodyData
-    * @param array $query
-    * @param boolean $assoc
-    * @param string $contentType
-    * @return array
-    */
-    public function put($ressourceName, $ressourcePath =null, $ressourceId=null, $bodyData = array(),$query=array(), $assoc = false,$contentType='json'){
-        return $this->getCertainClient()->put($ressourceName, $ressourcePath, $ressourceId, $bodyData, $query, $assoc,$contentType);
+     * Send a "PUT" request to put information to certain;
+     * @param string $resourceName
+     * @param string $resourcePath
+     * @param string $resourceId
+     * @param array $bodyData
+     * @param array $query
+     * @param boolean $assoc
+     * @param string $contentType
+     * @return array
+     */
+    public function put($resourceName, $resourcePath = null, $resourceId = null, $bodyData = [], $query = [], $assoc = false, $contentType = 'json')
+    {
+        return $this->getCertainClient()->put($resourceName, $resourcePath, $resourceId, $bodyData, $query, $assoc, $contentType);
     }
-    
+
     /**
-    * Send a "DELETE" request to delete information from certain;
-    * @param string $ressourceName
-    * @param string $ressourcePath
-    * @param string $ressourceId
-    * @param boolean $assoc
-    * @param string $contentType
-    * @return array
-    */
-    public function delete($ressourceName, $ressourcePath =null, $ressourceId=null, $assoc = false,$contentType='json'){
-        return $this->getCertainClient()->delete($ressourceName, $ressourcePath, $ressourceId, $assoc,$contentType);
+     * Send a "DELETE" request to delete information from certain;
+     * @param string $resourceName
+     * @param string $resourcePath
+     * @param string $resourceId
+     * @param boolean $assoc
+     * @param string $contentType
+     * @return array
+     */
+    public function delete($resourceName, $resourcePath = null, $resourceId = null, $assoc = false, $contentType = 'json')
+    {
+        return $this->getCertainClient()->delete($resourceName, $resourcePath, $resourceId, $assoc, $contentType);
     }
 
 
